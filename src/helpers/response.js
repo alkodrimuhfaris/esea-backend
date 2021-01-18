@@ -1,7 +1,7 @@
 module.exports = (
   response,
   message,
-  additionalData,
+  additionalData = {},
   status = 200,
   success = true
 ) => {

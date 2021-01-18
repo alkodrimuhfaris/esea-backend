@@ -37,6 +37,29 @@ const sanitizeForm = (data = []) => {
 };
 
 module.exports = {
+  adminUserValidate: async (body, requires = "create") => {
+    let user = {
+      name: joi.string().required(),
+      password: joi.string().alphanum().min(3).max(30).required(),
+      email: joi.string().required(),
+      phone: joi
+        .string()
+        .regex(
+          /^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i
+        )
+        .required(),
+      roleId: joi.number().required(),
+    };
+
+    user = requiring(requires, user);
+    const { value: data, error } = user.validate(body);
+    if (error) throw new Error(error);
+    let { password } = data;
+    password && (password = await bcrypt.hash(password, 10));
+    Object.assign(data, { password });
+    const [result] = sanitizeForm([data]);
+    return result;
+  },
   userValidate: async (body, requires = "create") => {
     let user = {
       name: joi.string().required(),
@@ -62,6 +85,7 @@ module.exports = {
   productValidate: async (body, requires = "create") => {
     let product = {
       productName: joi.string().required(),
+      category: joi.string().required(),
       price: joi.number().required(),
       description: joi.string().required(),
       stocks: joi.number().required(),

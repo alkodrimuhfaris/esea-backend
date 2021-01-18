@@ -96,4 +96,35 @@ module.exports = {
 
     return { results, count };
   },
+  searchOrCreateCategory: async (whereData = {}, tables = table) => {
+    const { dataArr, prepStatement } = queryGenerator({ data: whereData });
+
+    // query for search and limit
+    const additionalQuery = [dataArr]
+      .filter((item) => item)
+      .map((item) => `(${item})`);
+
+    // query for where (if it exist)
+    const where = additionalQuery ? " WHERE " : "";
+
+    query = `SELECT * 
+            FROM ${tables}
+            ${where}
+            ${additionalQuery}`;
+    let results = await connectToDB(query, prepStatement);
+
+    const created = !results.length;
+
+    if (created) {
+      query = `INSERT INTO ${tables} SET ?`;
+      await connectToDB(query, whereData);
+
+      query = `SELECT * 
+              FROM ${tables}
+              ${where}
+              ${additionalQuery}`;
+      results = await connectToDB(query, prepStatement);
+    }
+    return { results, created };
+  },
 };

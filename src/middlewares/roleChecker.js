@@ -1,7 +1,7 @@
 const response = require("../helpers/response");
 
 module.exports = {
-  paramsItemId: (req, res, next) => {
+  paramsProductId: (req, res, next) => {
     let { id, productId } = req.params;
     if (!Number(id) || !Number(productId)) {
       return response(res, "id params must be a number!", {}, 403, false);

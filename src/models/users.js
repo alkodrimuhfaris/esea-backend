@@ -42,7 +42,7 @@ module.exports = {
             ${additionalQuery}`;
     return await connectToDB(query, prepStatement);
   },
-  getuser: async (whereData = {}, tables = table) => {
+  getUser: async (whereData = {}, tables = table) => {
     const { dataArr, prepStatement } = queryGenerator({ data: whereData });
 
     const additionalQuery = [dataArr]
