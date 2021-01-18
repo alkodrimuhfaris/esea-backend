@@ -80,7 +80,7 @@ module.exports = {
       Object.assign(registrationData, { id });
       return responseStandard(
         res,
-        "succes create registrators",
+        "Registration success",
         { result: registrationData },
         true,
         200

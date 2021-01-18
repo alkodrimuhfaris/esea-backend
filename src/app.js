@@ -26,6 +26,16 @@ const productRouter = require("./routers/products");
 app.use = ("/products", productRouter);
 
 // registration router
+const registrationRouter = require("./routers/registrations");
+app.use = ("/registrations", registrationRouter);
+
+// categories router
+const categoriesRouter = require("./routers/categories");
+app.use = ("/categories", categoriesRouter);
+
+// roles router
+const rolesRouter = require("./routers/roles");
+app.use = ("/roles", rolesRouter);
 
 app.listen(8181, () => {
   console.log("App listening on port 8181");

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const registrations = require("../controllers/registrations");
+const categories = require("../controllers/categories");
 
 const authMiddleware = require("../middlewares/auth");
 
@@ -8,27 +8,22 @@ const roleChecker = require("../middlewares/roleChecker");
 
 // const forgotPassword = require("../controllers/forgotPassword");
 
-router.post(
-  "/",
-  authMiddleware,
-  roleChecker.admin,
-  registrations.createRegistration
-);
+router.post("/", authMiddleware, roleChecker.admin, categories.createCategory);
 router.patch(
   "/:id",
   authMiddleware,
   roleChecker.admin,
   roleChecker.paramsNumber,
-  registrations.updateRegistrator
+  categories.updateCategories
 );
 router.delete(
   "/:id",
   authMiddleware,
   roleChecker.admin,
   roleChecker.paramsNumber,
-  registrations.deleteRegistrator
+  categories.deleteCategory
 );
-router.get("/", registrations.getAllRegistrator);
-router.get("/:id", registrations.getRegistratorDetail);
+router.get("/", categories.viewCategories);
+router.get("/:id", categories.viewCategoriesById);
 
 module.exports = router;
