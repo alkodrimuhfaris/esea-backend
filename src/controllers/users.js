@@ -38,6 +38,20 @@ module.exports = {
       return responseStandard(res, err.message, {}, 500, false);
     }
   },
+  getOwnProfile: async (req, res) => {
+    const { id } = req.user;
+    try {
+      const [result] = await userModel.getUser({ id });
+      delete result.password;
+      const msg = result ? "Detail User" : "Id is not valid";
+      return responseStandard(res, msg, {
+        result,
+      });
+    } catch (err) {
+      console.log(err);
+      return responseStandard(res, err.message, {}, 500, false);
+    }
+  },
   createUser: async (req, res) => {
     try {
       const userData = await joiForm.adminUserValidate(req.body);
@@ -61,6 +75,33 @@ module.exports = {
   },
   updateUser: async (req, res) => {
     const { id } = req.params;
+    const avatar = req.file ? "Uploads/" + req.file.filename : null;
+    try {
+      const { password } = req.body;
+      password && delete req.body.password;
+      const userData = await joiForm.userValidate(req.body, "patch");
+      Object.assign(userData, { avatar });
+      const updateResult = await userModel.updateProducts(userData, {
+        id,
+      });
+      if (!updateResult.affectedRows) {
+        return responseStandard(res, "internal server error", {}, 500, false);
+      }
+      Object.assign(userData, { id });
+      return responseStandard(
+        res,
+        "Profile updated!",
+        { result: userData },
+        true,
+        200
+      );
+    } catch (err) {
+      console.log(err);
+      return responseStandard(res, err.message, {}, 500, false);
+    }
+  },
+  updateSelf: async (req, res) => {
+    const { id } = req.user;
     const avatar = req.file ? "Uploads/" + req.file.filename : null;
     try {
       const { password } = req.body;
@@ -128,7 +169,7 @@ module.exports = {
       return responseStandard(res, err.message, {}, 500, false);
     }
   },
-  changePassword: async (req, res) => {
+  updatePassword: async (req, res) => {
     const { id: userId } = req.user;
     const schema = joi.object({
       oldPassword: joi.string().required(),

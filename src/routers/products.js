@@ -7,7 +7,6 @@ const authMiddleware = require("../middlewares/auth");
 const roleChecker = require("../middlewares/roleChecker");
 
 const multerSingle = require("../middlewares/multerSingle");
-// const forgotPassword = require("../controllers/forgotPassword");
 
 router.post(
   "/",

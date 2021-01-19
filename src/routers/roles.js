@@ -6,8 +6,6 @@ const authMiddleware = require("../middlewares/auth");
 
 const roleChecker = require("../middlewares/roleChecker");
 
-// const forgotPassword = require("../controllers/forgotPassword");
-
 router.post("/", authMiddleware, roleChecker.admin, roles.createRole);
 router.patch(
   "/:id",
