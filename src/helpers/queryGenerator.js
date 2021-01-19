@@ -38,9 +38,9 @@ module.exports = (query) => {
           key = !(key && value)
             ? ""
             : key === "before"
-            ? `cretedAt <= "${value}"`
+            ? `createdAt <= "${value}"`
             : key === "after"
-            ? `cretedAt >= "${value}"`
+            ? `createdAt >= "${value}"`
             : "";
           return key;
         })
