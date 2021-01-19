@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 // auth middleware
-const authMiddleware = require("../middlewares/auth");
+const authMiddleware = require("./middlewares/auth");
 
 // router for static file
 app.use("/Uploads", express.static("./Assets/Public/Uploads"));
@@ -42,7 +42,7 @@ app.use = ("/roles", rolesRouter);
 
 // users router
 const usersRouter = require("./routers/users");
-app.use("/users", authMiddleware, usersRouter);
+app.use = ("/users", authMiddleware, usersRouter);
 
 app.listen(8181, () => {
   console.log("App listening on port 8181");
