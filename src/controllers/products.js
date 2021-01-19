@@ -32,7 +32,7 @@ module.exports = {
       const [product] = await productModel.getProduct({ id });
       console.log(product);
       let category = {};
-      if (Object.keys(product).length) {
+      if (product) {
         [category] = await categoryModel.getCategory({
           id: product.categoryId,
         });
