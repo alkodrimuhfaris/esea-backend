@@ -31,9 +31,12 @@ module.exports = {
     try {
       const [product] = await productModel.getProduct({ id });
       console.log(product);
-      const [category] = await categoryModel.getCategory({
-        id: product.categoryId,
-      });
+      let category = {};
+      if (Object.keys(product).length) {
+        [category] = await categoryModel.getCategory({
+          id: product.categoryId,
+        });
+      }
       const msg = product ? "Detail Product" : "Id is not valid";
       return responseStandard(res, msg, {
         results: { product, category },

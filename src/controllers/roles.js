@@ -12,11 +12,10 @@ module.exports = {
     try {
       const { results, count } = await roleModel.getAllRoles({}, req.query);
       const pageInfo = pagination.paging(count, page, limit, path, req.query);
-      if (results.length) {
-        return response(res, "List of Roles", { results, pageInfo });
-      } else {
-        return response(res, "There is no item in the list", { pageInfo });
-      }
+      const msg = results.length
+        ? "List of Roles"
+        : "There is no item in the list";
+      return response(res, msg, { results, pageInfo });
     } catch (error) {
       console.log(error);
       return response(res, "Internal server error", {}, 500, false);

@@ -16,11 +16,10 @@ module.exports = {
         req.query
       );
       const pageInfo = pagination.paging(count, page, limit, path, req.query);
-      if (results.length) {
-        return response(res, "List of Categories", { results, pageInfo });
-      } else {
-        return response(res, "There is no item in the list", { pageInfo });
-      }
+      const msg = results.length
+        ? "List of Categories"
+        : "There is no item in the list";
+      return response(res, msg, { results, pageInfo });
     } catch (error) {
       console.log(error);
       return response(res, "Internal server error", {}, 500, false);
@@ -45,10 +44,11 @@ module.exports = {
           : "There is no items in here";
         return response(res, msg, { category, products, pageInfo });
       } else {
+        const pageInfo = pagination.paging(0, page, limit, path, req.query);
         return response(res, "There is no category in here", {
           category,
           products: [],
-          pageInfo: {},
+          pageInfo,
         });
       }
     } catch (error) {
