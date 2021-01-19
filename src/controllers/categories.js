@@ -42,11 +42,15 @@ module.exports = {
         const msg = count
           ? "Items on category id: " + id
           : "There is no items in here";
-        return response(res, msg, { category, products, pageInfo });
+        return response(res, msg, {
+          category: category[0],
+          products,
+          pageInfo,
+        });
       } else {
         const pageInfo = pagination.paging(0, page, limit, path, req.query);
         return response(res, "There is no category in here", {
-          category,
+          category: {},
           products: [],
           pageInfo,
         });
