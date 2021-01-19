@@ -21,7 +21,19 @@ router.delete(
   roleChecker.paramsNumber,
   roles.deleteRole
 );
-router.get("/", roles.viewRoles);
-router.get("/:id", roles.getRoleDetail);
+router.get(
+  "/",
+  authMiddleware,
+  roleChecker.admin,
+  roleChecker.paramsNumber,
+  roles.viewRoles
+);
+router.get(
+  "/:id",
+  authMiddleware,
+  roleChecker.admin,
+  roleChecker.paramsNumber,
+  roles.getRoleDetail
+);
 
 module.exports = router;
