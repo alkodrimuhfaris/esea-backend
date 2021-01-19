@@ -18,7 +18,7 @@ module.exports = (query) => {
     .join(" AND ");
 
   search = search ? Object.entries(search) : [];
-  sort = sort ? Object.entries(sort) : [["cretedAt", "DESC"]];
+  sort = sort ? Object.entries(sort) : [["createdAt", "DESC"]];
 
   // search query
   let searchArr = [];
