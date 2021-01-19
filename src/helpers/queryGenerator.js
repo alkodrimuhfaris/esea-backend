@@ -1,7 +1,7 @@
 module.exports = (query) => {
   let {
     search = {},
-    sort = { cretedAt: "DESC" },
+    sort = { createdAt: "DESC" },
     date = {},
     price = {},
     data = {},
