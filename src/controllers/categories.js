@@ -33,7 +33,7 @@ module.exports = {
       const {
         results: category,
         count: categoryCount,
-      } = await categoryModel.viewAllCategories({ id });
+      } = await categoryModel.getAllCategories({ id });
       if (categoryCount) {
         const { results: products, count } = await productModel.getAllProducts({
           categoryId: id,
