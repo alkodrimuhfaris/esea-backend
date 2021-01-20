@@ -13,7 +13,7 @@ module.exports = {
       password,
     };
     try {
-      const data = await user.getuser({ email: credentials.email });
+      const data = await user.getUser({ email: credentials.email });
 
       // checking is there any user data with email
       if (!data[0]) {
