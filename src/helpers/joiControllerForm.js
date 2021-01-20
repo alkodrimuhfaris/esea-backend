@@ -55,8 +55,10 @@ module.exports = {
     const { value: data, error } = user.validate(body);
     if (error) throw new Error(error);
     let { password } = data;
-    password && (password = await bcrypt.hash(password, 10));
-    Object.assign(data, { password });
+    if (password) {
+      password = await bcrypt.hash(password, 10);
+      Object.assign(data, { password });
+    }
     const [result] = sanitizeForm([data]);
     return result;
   },
@@ -77,8 +79,10 @@ module.exports = {
     const { value: data, error } = user.validate(body);
     if (error) throw new Error(error);
     let { password } = data;
-    password && (password = await bcrypt.hash(password, 10));
-    Object.assign(data, { password });
+    if (password) {
+      password = await bcrypt.hash(password, 10);
+      Object.assign(data, { password });
+    }
     const [result] = sanitizeForm([data]);
     return result;
   },
