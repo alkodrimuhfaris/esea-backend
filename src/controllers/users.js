@@ -75,11 +75,11 @@ module.exports = {
     const { id } = req.params;
     const avatar = req.file ? "Uploads/" + req.file.filename : null;
     try {
-      const { password } = req.body;
+      const { password, avatar: unwantedAva } = req.body;
       password && delete req.body.password;
+      unwantedAva && delete req.body.avatar;
       const userData = await joiForm.userValidate(req.body, "patch");
       Object.assign(userData, { avatar });
-      console.log(userData);
       const updateResult = await userModel.updateUser(userData, {
         id,
       });
@@ -103,13 +103,11 @@ module.exports = {
     const { id } = req.user;
     const avatar = req.file ? "Uploads/" + req.file.filename : null;
     try {
-      const { password } = req.body;
+      const { password, avatar: unwantedAva } = req.body;
       password && delete req.body.password;
-      console.log(req.body);
-      console.log(avatar);
+      unwantedAva && delete req.body.avatar;
       const userData = await joiForm.userValidate(req.body, "patch");
       Object.assign(userData, { avatar });
-      console.log(userData);
       const updateResult = await userModel.updateUser(userData, {
         id,
       });
