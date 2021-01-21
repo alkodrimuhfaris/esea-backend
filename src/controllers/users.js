@@ -79,6 +79,7 @@ module.exports = {
       password && delete req.body.password;
       const userData = await joiForm.userValidate(req.body, "patch");
       Object.assign(userData, { avatar });
+      console.log(userData);
       const updateResult = await userModel.updateUser(userData, {
         id,
       });
