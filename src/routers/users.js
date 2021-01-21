@@ -4,12 +4,15 @@ const users = require("../controllers/users");
 
 const roleChecker = require("../middlewares/roleChecker");
 
+const multerSingle = require("../middlewares/multerSingle");
+
 // admin
 router.post("/admin", roleChecker.admin, users.createUser);
 router.patch(
   "/admin/:id",
   roleChecker.admin,
   roleChecker.paramsNumber,
+  multerSingle("avatar"),
   users.updateUser
 );
 router.delete(
@@ -33,7 +36,7 @@ router.get(
 
 // profile user
 router.get("/profile", users.getOwnProfile);
-router.patch("/profile", users.updateSelf);
+router.patch("/profile", multerSingle("avatar"), users.updateSelf);
 router.delete("/profile", users.deleteSelf);
 router.delete("/profile/avatar", users.deleteAvatar);
 router.post("/profile/password", users.updatePassword);
