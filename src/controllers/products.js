@@ -69,8 +69,8 @@ module.exports = {
         res,
         "succes create product" + msgCreated,
         { result: productData },
-        true,
-        201
+        201,
+        true
       );
     } catch (err) {
       console.log(err);
@@ -102,13 +102,9 @@ module.exports = {
         return responseStandard(res, "internal server error", {}, 500, false);
       }
       Object.assign(productData, { id });
-      return responseStandard(
-        res,
-        "succes create product" + msgCreated,
-        { result: productData },
-        true,
-        200
-      );
+      return responseStandard(res, "succes create product" + msgCreated, {
+        result: productData,
+      });
     } catch (err) {
       console.log(err);
       return responseStandard(res, err.message, {}, 500, false);

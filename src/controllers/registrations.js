@@ -53,8 +53,8 @@ module.exports = {
         res,
         "Registration success",
         { result: registrationData },
-        true,
-        201
+        201,
+        true
       );
     } catch (err) {
       console.log(err);
@@ -78,13 +78,9 @@ module.exports = {
         return responseStandard(res, "internal server error", {}, 500, false);
       }
       Object.assign(registrationData, { id });
-      return responseStandard(
-        res,
-        "Registration success",
-        { result: registrationData },
-        true,
-        200
-      );
+      return responseStandard(res, "Registration success", {
+        result: registrationData,
+      });
     } catch (err) {
       console.log(err);
       return responseStandard(res, err.message, {}, 500, false);

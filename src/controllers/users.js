@@ -63,8 +63,8 @@ module.exports = {
         res,
         "succes create user!",
         { result: userData },
-        true,
-        201
+        201,
+        true
       );
     } catch (err) {
       console.log(err);
@@ -87,13 +87,7 @@ module.exports = {
         return responseStandard(res, "internal server error", {}, 500, false);
       }
       Object.assign(userData, { id });
-      return responseStandard(
-        res,
-        "Profile updated!",
-        { result: userData },
-        true,
-        200
-      );
+      return responseStandard(res, "Profile updated!", { result: userData });
     } catch (err) {
       console.log(err);
       return responseStandard(res, err.message, {}, 500, false);
@@ -115,13 +109,7 @@ module.exports = {
         return responseStandard(res, "internal server error", {}, 500, false);
       }
       Object.assign(userData, { id });
-      return responseStandard(
-        res,
-        "Profile updated!",
-        { result: userData },
-        true,
-        200
-      );
+      return responseStandard(res, "Profile updated!", { result: userData });
     } catch (err) {
       console.log(err);
       return responseStandard(res, err.message, {}, 500, false);
