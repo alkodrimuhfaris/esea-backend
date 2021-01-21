@@ -15,9 +15,7 @@ module.exports = {
     try {
       const { results, count } = await userModel.getAllUsers({}, req.query);
       const pageInfo = pagination.paging(count, page, limit, path, req);
-      const msg = count
-        ? "List of products"
-        : "There is no product in the list";
+      const msg = count ? "List of users" : "There is no user in the list";
       return responseStandard(res, msg, { results, pageInfo });
     } catch (err) {
       console.log(err);
@@ -55,7 +53,7 @@ module.exports = {
   createUser: async (req, res) => {
     try {
       const userData = await joiForm.adminUserValidate(req.body);
-      const createResult = await userModel.creteProducts(userData);
+      const createResult = await userModel.createUser(userData);
       if (!createResult.insertId) {
         return responseStandard(res, "internal server error", {}, 500, false);
       }
@@ -81,7 +79,7 @@ module.exports = {
       password && delete req.body.password;
       const userData = await joiForm.userValidate(req.body, "patch");
       Object.assign(userData, { avatar });
-      const updateResult = await userModel.updateProducts(userData, {
+      const updateResult = await userModel.updateUser(userData, {
         id,
       });
       if (!updateResult.affectedRows) {
@@ -108,7 +106,7 @@ module.exports = {
       password && delete req.body.password;
       const userData = await joiForm.userValidate(req.body, "patch");
       Object.assign(userData, { avatar });
-      const updateResult = await userModel.updateProducts(userData, {
+      const updateResult = await userModel.updateUser(userData, {
         id,
       });
       if (!updateResult.affectedRows) {
