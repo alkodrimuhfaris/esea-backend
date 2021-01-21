@@ -127,12 +127,29 @@ module.exports = {
       return responseStandard(res, err.message, {}, 500, false);
     }
   },
+  deleteAvatar: async (req, res) => {
+    const { id } = req.user;
+    try {
+      const { count } = await userModel.getAllUsers({ id }, {});
+      if (!count) {
+        return responseStandard(res, "Id not found!", {}, 400, false);
+      }
+      const deleteAva = await userModel.updateUser({ avatar: "" }, { id });
+      if (!deleteAva.affectedRows) {
+        return responseStandard(res, "Fail to delete avatar", 400, false);
+      }
+      return responseStandard(res, "Delete user avatar success", {});
+    } catch (err) {
+      console.log(err);
+      return responseStandard(res, err.message, {}, 500, false);
+    }
+  },
   deleteSelf: async (req, res) => {
     const { id } = req.user;
     try {
       const { results, count } = await userModel.getAllUsers({ id }, {});
       if (!count) {
-        return responseStandard(res, "item not found!", {}, 400, false);
+        return responseStandard(res, "Id not found!", {}, 400, false);
       }
       const deleteItem = await userModel.deleteUser({ id });
       if (!deleteItem.affectedRows) {

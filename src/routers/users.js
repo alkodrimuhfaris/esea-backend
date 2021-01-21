@@ -35,6 +35,7 @@ router.get(
 router.get("/profile", users.getOwnProfile);
 router.patch("/profile", users.updateSelf);
 router.delete("/profile", users.deleteSelf);
+router.delete("/profile/avatar", users.deleteAvatar);
 router.post("/profile/password", users.updatePassword);
 
 module.exports = router;
