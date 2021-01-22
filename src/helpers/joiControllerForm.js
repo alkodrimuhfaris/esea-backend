@@ -100,8 +100,7 @@ module.exports = {
 
     const { value: data, error } = product.validate(body);
     if (error) throw new Error(error);
-    const [result] = sanitizeForm([data]);
-    return result;
+    return data;
   },
   registrationValidate: async (body, requires = "create") => {
     let registration = {
