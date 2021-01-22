@@ -47,6 +47,7 @@ module.exports = {
     }
   },
   createProduct: async (req, res) => {
+    console.log(req.file);
     const picture = req.file ? "Uploads/" + req.file.filename : null;
     if (!picture) {
       return responseStandard(res, "insert picture!", {}, 400, false);
