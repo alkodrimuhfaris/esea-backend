@@ -22,7 +22,7 @@ module.exports = {
     next();
   },
   admin: (req, res, next) => {
-    if (req.user.role_id === 1) {
+    if (req.user.roleId === 1) {
       next();
     } else {
       return response(res, "Forbidden access", {}, 403, false);
