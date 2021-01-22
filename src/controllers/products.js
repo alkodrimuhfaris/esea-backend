@@ -84,7 +84,10 @@ module.exports = {
     try {
       const productData = await joiForm.productValidate(req.body, "patch");
       const { category } = productData;
-      Object.assign(productData, { picture });
+      Object.assign(productData, { category });
+      if (picture) {
+        Object.assign(productData, { picture });
+      }
       let msgCreated = "";
       if (category) {
         delete productData.category;
