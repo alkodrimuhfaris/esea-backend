@@ -10,6 +10,7 @@ module.exports = {
   getAllRegistrator: async (req, res) => {
     const path = "registrations";
     const { limit, page } = req.query;
+    console.log(req.query);
     try {
       const { results, count } = await registrationModel.getAllRegistrations(
         {},
