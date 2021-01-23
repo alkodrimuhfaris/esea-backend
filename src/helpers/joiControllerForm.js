@@ -112,6 +112,7 @@ module.exports = {
           /^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i
         )
         .required(),
+      partner: joi.string().required(),
     };
 
     registration = requiring(requires, registration);

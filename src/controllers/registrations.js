@@ -41,6 +41,7 @@ module.exports = {
   },
   createRegistration: async (req, res) => {
     try {
+      console.log(req.body);
       const registrationData = await joiForm.registrationValidate(req.body);
       const createResult = await registrationModel.creteRegistrations(
         registrationData
