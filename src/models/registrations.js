@@ -62,13 +62,14 @@ module.exports = {
     reqQuery = {},
     tables = table
   ) => {
+    const queryData = reqQuery.data ? reqQuery.data : {};
     const {
       searchArr,
       date,
       orderArr,
       dataArr,
       prepStatement,
-    } = queryGenerator({ ...reqQuery, data: whereData });
+    } = queryGenerator({ ...reqQuery, data: { ...queryData, ...whereData } });
 
     // query for search and limit
     const additionalQuery = [searchArr, date, dataArr]
