@@ -16,6 +16,7 @@ app.get("/", (req, res) => {
 
 // auth middleware
 const authMiddleware = require("./middlewares/auth");
+const roleChecker = require("./middlewares/roleChecker");
 
 // router for static file
 app.use("/Uploads", express.static("./Assets/Public/Uploads"));
@@ -30,7 +31,12 @@ app.use("/products", productRouter);
 
 // registration router
 const registrationRouter = require("./routers/registrations");
-app.use("/registrations", registrationRouter);
+app.use(
+  "/registrations",
+  authMiddleware,
+  roleChecker.admin,
+  registrationRouter
+);
 
 // categories router
 const categoriesRouter = require("./routers/categories");
