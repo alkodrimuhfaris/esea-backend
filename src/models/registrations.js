@@ -63,6 +63,7 @@ module.exports = {
     tables = table
   ) => {
     const queryData = reqQuery.data ? reqQuery.data : {};
+    console.log(queryData);
     const {
       searchArr,
       date,
