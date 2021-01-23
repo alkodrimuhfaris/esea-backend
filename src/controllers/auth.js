@@ -61,7 +61,7 @@ module.exports = {
       const userCredentials = await userValidate(req.body);
 
       // assign role_id to forms
-      Object.assign(userCredentials, { roleId: 1 });
+      Object.assign(userCredentials, { roleId: 2 });
 
       // create user
       const results = await user.createUser(userCredentials);
