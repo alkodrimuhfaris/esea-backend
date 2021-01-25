@@ -124,12 +124,14 @@ module.exports = {
   },
   webVisitorValidate: async (body, requires = "patch") => {
     let visitorData = {
+      id: joi.number(),
       ip: joi.string(),
       city: joi.string(),
       country: joi.string(),
       provider: joi.string(),
       startSession: joi.date().timestamp(),
       endSession: joi.date().timestamp(),
+      timeVisit: joi.number(),
       uuid: joi.string().uuid(),
     };
     visitorData = requiring(requires, visitorData);

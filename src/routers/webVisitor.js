@@ -6,11 +6,14 @@ const authMiddleware = require("../middlewares/auth");
 
 const roleChecker = require("../middlewares/roleChecker");
 
-router.post("/public", webVisitor.addVisitor);
+router.post("/start", webVisitor.startSession);
+router.post("/end", roleChecker.visitor, webVisitor.endSession);
 router.patch(
-  "/public/:id/:uuid",
-  roleChecker.visitor,
-  webVisitor.updateVisitor
+  "/admin/:id",
+  authMiddleware,
+  roleChecker.admin,
+  roleChecker.paramsNumber,
+  webVisitor.editVisitor
 );
 router.delete(
   "/admin/:id",

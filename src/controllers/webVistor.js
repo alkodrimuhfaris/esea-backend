@@ -1,35 +1,3 @@
-/* eslint-disable no-unused-vars */
-// const IP = {
-//   ip: "180.214.233.87",
-//   version: "IPv4",
-//   city: "Jakarta",
-//   region: "Jakarta",
-//   region_code: "JK",
-//   country: "ID",
-//   country_name: "Indonesia",
-//   country_code: "ID",
-//   country_code_iso3: "IDN",
-//   country_capital: "Jakarta",
-//   country_tld: ".id",
-//   continent_code: "AS",
-//   in_eu: false,
-//   postal: null,
-//   latitude: -6.1741,
-//   longitude: 106.8296,
-//   timezone: "Asia/Jakarta",
-//   utc_offset: "+0700",
-//   country_calling_code: "+62",
-//   currency: "IDR",
-//   currency_name: "Rupiah",
-//   languages: "id,en,nl,jv",
-//   country_area: 1919440,
-//   country_population: 267663435,
-//   asn: "AS45727",
-//   org: "Hutchison CP Telecommunications, PT",
-// }
-
-// ip	city	country	provider	startSession	endSession	timeVisit
-
 const responseStandard = require("../helpers/response");
 // const io = require("../app");
 
@@ -40,6 +8,8 @@ const pagination = require("../helpers/pagination");
 const joiForm = require("../helpers/joiControllerForm");
 
 const { v4: uuidv4 } = require("uuid");
+
+const moment = require("moment");
 
 module.exports = {
   getAllVisitor: async (req, res) => {
@@ -74,7 +44,7 @@ module.exports = {
       return responseStandard(res, err.message, {}, 500, false);
     }
   },
-  addVisitor: async (req, res) => {
+  startSession: async (req, res) => {
     try {
       const {
         ip,
@@ -112,32 +82,42 @@ module.exports = {
       return responseStandard(res, err.message, {}, 500, false);
     }
   },
-  updateVisitor: async (req, res) => {
-    const { id, uuid } = req.params;
+  endSession: async (req, res) => {
     try {
-      const {
-        ip,
-        city,
-        country_name: country,
-        org: provider,
-        endSession,
-      } = req.body;
-      const dataVisitor = {
-        ip,
-        city,
-        country,
-        provider,
-        endSession,
-      };
-      const webVisitorData = await joiForm.webVisitorValidate(dataVisitor);
+      const webVisitorData = await joiForm.webVisitorValidate(req.body);
+      const { startSession, endSession, id, uuid } = webVisitorData;
+      const timeVisit = moment(endSession).diff(
+        moment(startSession),
+        "minutes"
+      );
+      const updateResult = await webVisitorModel.updateVisitor(
+        { endSession, timeVisit },
+        {
+          id,
+          uuid,
+        }
+      );
+      if (!updateResult.affectedRows) {
+        return responseStandard(res, "internal server error", {}, 500, false);
+      }
+      return responseStandard(res, "update visitor success", {
+        result: webVisitorData,
+      });
+    } catch (err) {
+      console.log(err);
+      return responseStandard(res, err.message, {}, 500, false);
+    }
+  },
+  editVisitor: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const webVisitorData = await joiForm.webVisitorValidate(req.body);
       const updateResult = await webVisitorModel.updateVisitor(webVisitorData, {
         id,
-        uuid,
       });
       if (!updateResult.affectedRows) {
         return responseStandard(res, "internal server error", {}, 500, false);
       }
-      Object.assign(webVisitorData, { id });
       return responseStandard(res, "update visitor success", {
         result: webVisitorData,
       });

@@ -31,8 +31,10 @@ module.exports = {
   },
   visitor: async (req, res, next) => {
     try {
-      const params = await joiValidationForm(req.params);
-      req.params = { ...params };
+      const { id, uuid } = req.body;
+      const params = { id, uuid };
+      await joiValidationForm(params);
+      req.body = { ...req.body, id, uuid };
       next();
     } catch (error) {
       return response(res, "Forbidden access", {}, 403, false);
