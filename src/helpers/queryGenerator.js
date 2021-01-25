@@ -5,6 +5,7 @@ module.exports = (query) => {
     date = {},
     price = {},
     data = {},
+    groupBy = "",
   } = query;
   let dataArr = [];
   const prepStatement = [];
@@ -72,12 +73,15 @@ module.exports = (query) => {
     orderArr.push(key);
   }
 
+  groupBy = groupBy ? " GROUP BY " + groupBy + " " : "";
+
   return {
     searchArr,
     date,
     price,
     orderArr,
     dataArr,
+    groupBy,
     prepStatement,
   };
 };

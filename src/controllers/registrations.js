@@ -1,4 +1,5 @@
 const responseStandard = require("../helpers/response");
+// const io = require("../app");
 
 const registrationModel = require("../models/registrations");
 
@@ -49,6 +50,8 @@ module.exports = {
         return responseStandard(res, "internal server error", {}, 500, false);
       }
       Object.assign(registrationData, { id: createResult.insertId });
+      // socket connection
+      // io.emit(sendEvent, { senderData, chat });
       return responseStandard(
         res,
         "Registration success",
@@ -98,7 +101,13 @@ module.exports = {
       }
       const deleteItem = await registrationModel.deleteRegistrations({ id });
       if (!deleteItem.affectedRows) {
-        return responseStandard(res, "fail to delete registrator", 400, false);
+        return responseStandard(
+          res,
+          "fail to delete registrator",
+          {},
+          400,
+          false
+        );
       }
       return responseStandard(
         res,

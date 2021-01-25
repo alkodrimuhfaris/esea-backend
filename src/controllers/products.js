@@ -122,7 +122,7 @@ module.exports = {
       }
       const deleteItem = await productModel.deleteProduct({ id });
       if (!deleteItem.affectedRows) {
-        return responseStandard(res, "fail to delete item", 400, false);
+        return responseStandard(res, "fail to delete item", {}, 400, false);
       }
       return responseStandard(
         res,

@@ -122,4 +122,33 @@ module.exports = {
     const [result] = sanitizeForm([data]);
     return result;
   },
+  webVisitorValidate: async (body, requires = "patch") => {
+    let visitorData = {
+      ip: joi.string(),
+      city: joi.string(),
+      country: joi.string(),
+      provider: joi.string(),
+      startSession: joi.date().timestamp(),
+      endSession: joi.date().timestamp(),
+      uuid: joi.string().uuid(),
+    };
+    visitorData = requiring(requires, visitorData);
+
+    const { value: data, error } = visitorData.validate(body);
+    if (error) throw new Error(error);
+    const [result] = sanitizeForm([data]);
+    return result;
+  },
+  uuidParams: async (body, requires = "create") => {
+    let visitorData = {
+      id: joi.number(),
+      uuid: joi.string().uuid(),
+    };
+    visitorData = requiring(requires, visitorData);
+
+    const { value: data, error } = visitorData.validate(body);
+    if (error) throw new Error(error);
+    const [result] = sanitizeForm([data]);
+    return result;
+  },
 };

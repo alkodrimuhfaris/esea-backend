@@ -14,6 +14,15 @@ app.get("/", (req, res) => {
   return response(res, "API eSea Indonesia");
 });
 
+// socket connection
+const server = require("http").createServer(app);
+const io = require("socket.io")(server, {});
+module.exports = io;
+
+io.on("connection", (socket) => {
+  console.log("a user connected");
+});
+
 // auth middleware
 const authMiddleware = require("./middlewares/auth");
 
@@ -44,6 +53,10 @@ app.use("/roles", rolesRouter);
 const usersRouter = require("./routers/users");
 app.use("/users", authMiddleware, usersRouter);
 
-app.listen(8181, () => {
-  console.log("App listening on port 8181");
+// visitor router
+const visitorRouter = require("./routers/webVisitor");
+app.use("/visitors", visitorRouter);
+
+server.listen(process.env.APP_PORT, () => {
+  console.log(`App listening on port ${process.env.APP_PORT}`);
 });

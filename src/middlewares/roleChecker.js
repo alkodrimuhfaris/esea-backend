@@ -1,4 +1,5 @@
 const response = require("../helpers/response");
+const joiValidationForm = require("../helpers/joiControllerForm");
 
 module.exports = {
   paramsProductId: (req, res, next) => {
@@ -25,6 +26,15 @@ module.exports = {
     if (req.user.roleId === 1) {
       next();
     } else {
+      return response(res, "Forbidden access", {}, 403, false);
+    }
+  },
+  visitor: async (req, res, next) => {
+    try {
+      const params = await joiValidationForm(req.params);
+      req.params = { ...params };
+      next();
+    } catch (error) {
       return response(res, "Forbidden access", {}, 403, false);
     }
   },

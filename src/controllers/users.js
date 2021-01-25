@@ -124,7 +124,7 @@ module.exports = {
       }
       const deleteAva = await userModel.updateUser({ avatar: "" }, { id });
       if (!deleteAva.affectedRows) {
-        return responseStandard(res, "Fail to delete avatar", 400, false);
+        return responseStandard(res, "Fail to delete avatar", {}, 400, false);
       }
       return responseStandard(res, "Delete user avatar success", {});
     } catch (err) {
@@ -141,7 +141,7 @@ module.exports = {
       }
       const deleteItem = await userModel.deleteUser({ id });
       if (!deleteItem.affectedRows) {
-        return responseStandard(res, "fail to delete user", 400, false);
+        return responseStandard(res, "fail to delete user", {}, 400, false);
       }
       return responseStandard(
         res,
@@ -162,7 +162,7 @@ module.exports = {
       }
       const deleteItem = await userModel.deleteUser({ id });
       if (!deleteItem.affectedRows) {
-        return responseStandard(res, "fail to delete user", 400, false);
+        return responseStandard(res, "fail to delete user", {}, 400, false);
       }
       return responseStandard(
         res,
