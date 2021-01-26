@@ -29,7 +29,7 @@ module.exports = io;
 const clientSocket = [];
 const clientIPdata = [];
 io.on("connection", (socket) => {
-  console.log("someone connected!");
+  console.log(`${socket} is connected`);
   clientSocket.push(socket);
   clientIPdata.push(socket);
   socket.on("startSession", (ipData) => {
@@ -38,6 +38,7 @@ io.on("connection", (socket) => {
     clientIPdata[i] = ipData;
   });
   socket.on("disconnect", async () => {
+    console.log(`${socket} is disconnected`);
     const endSession = new Date().getTime();
     const i = clientSocket.indexOf(socket);
     const ipData = clientIPdata[i];
