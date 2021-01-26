@@ -9,7 +9,7 @@ module.exports = {
       const { startSession, endSession, id, uuid } = webVisitorData;
       const timeVisit = moment(endSession).diff(
         moment(startSession),
-        "minutes"
+        "seconds"
       );
       const updateResult = await webVisitorModel.updateVisitor(
         { endSession, timeVisit },
