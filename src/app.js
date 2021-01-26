@@ -24,9 +24,11 @@ module.exports = io;
 const clientSocket = [];
 const clientIPdata = [];
 io.on("connection", (socket) => {
+  console.log('someone connected!');
   clientSocket.push(socket);
   clientIPdata.push(socket);
   socket.on("startSession", (ipData) => {
+    console.log(ipData);
     const i = clientSocket.indexOf(socket);
     clientIPdata[i] = ipData;
   });
