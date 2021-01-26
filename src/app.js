@@ -18,8 +18,12 @@ app.get("/", (req, res) => {
 
 // socket connection
 const server = require("http").createServer(app);
-const io = require("socket.io")(server, {});
-io.origins("*:*");
+const io = require("socket.io")(server, {
+  cors: {
+    methods: ["GET", "PATCH", "POST", "PUT"],
+    origin: true,
+  },
+});
 module.exports = io;
 
 const clientSocket = [];
