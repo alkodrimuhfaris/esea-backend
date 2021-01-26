@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const response = require("./helpers/response");
+const webVisitorCtl = require("./socketControllers/visitor");
 
 const app = express();
 
@@ -19,8 +21,25 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server, {});
 module.exports = io;
 
+const clientSocket = [];
+const clientIPdata = [];
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  clientSocket.push(socket);
+  clientIPdata.push(socket);
+  socket.on("startSession", (ipData) => {
+    const i = clientSocket.indexOf(socket);
+    clientIPdata[i] = ipData;
+  });
+  socket.on("disconnect", async () => {
+    const endSession = new Date().getTime();
+    const i = clientSocket.indexOf(socket);
+    const ipData = clientIPdata[i];
+    try {
+      await webVisitorCtl.endSession({ ...ipData, endSession });
+    } catch (error) {
+      console.log(error);
+    }
+  });
 });
 
 // auth middleware
