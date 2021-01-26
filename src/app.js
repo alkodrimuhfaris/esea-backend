@@ -24,7 +24,7 @@ module.exports = io;
 const clientSocket = [];
 const clientIPdata = [];
 io.on("connection", (socket) => {
-  console.log('someone connected!');
+  console.log("someone connected!");
   clientSocket.push(socket);
   clientIPdata.push(socket);
   socket.on("startSession", (ipData) => {
