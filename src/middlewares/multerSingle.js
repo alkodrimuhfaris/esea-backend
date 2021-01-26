@@ -48,12 +48,10 @@ module.exports = (field) => {
 
     upload(req, res, (err) => {
       if (err instanceof multer.MulterError) {
-        console.log(err);
         return responseStandard(res, err.message, {}, 500, false);
       } else if (req.fileValidationError) {
         return responseStandard(res, req.fileValidationError, {}, 400, false);
       } else if (err) {
-        console.log(err);
         return responseStandard(res, err.message, {}, 500, false);
       } else {
         return next();

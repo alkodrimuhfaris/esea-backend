@@ -4,7 +4,6 @@ const bcrypt = require("bcryptjs");
 
 const requiring = (requires, joiObj) => {
   if (requires === "put") {
-    console.log(joiObj);
     joiObj = joi.object({ ...joiObj }).fork(Object.keys(joiObj), (item) =>
       item.required().messages({
         "string.empty": "Forms can not be empty!",

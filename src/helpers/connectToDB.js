@@ -5,10 +5,8 @@ module.exports = (query, data = []) => {
     db.query(query, data, (err, results, _fields) => {
       if (err) {
         reject(err);
-        console.log(err);
       } else {
         resolve(results);
-        console.log(results);
       }
     });
   });
